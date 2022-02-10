@@ -3,9 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 declare global {
   namespace ReactNavigation {
@@ -19,20 +22,49 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  TabFriend: undefined;
-  TabChat: undefined;
-  TabCommunity: undefined;
-  TabRegion: undefined;
-  TabUser: undefined;
+  TabOne: NavigatorScreenParams<TabOneParamList> | undefined;
+  TabTwo: NavigatorScreenParams<TabTwoParamList> | undefined;
+  TabThree: NavigatorScreenParams<TabThreeParamList> | undefined;
+  TabFour: NavigatorScreenParams<TabFourParamList> | undefined;
+  TabFive: NavigatorScreenParams<TabFiveParamList> | undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export type TabOneParamList = {
+  TabOne_One: undefined;
+  TabOne_Two: undefined;
+  TabOne_Three: undefined;
+};
+
+export type TabTwoParamList = {
+  TabTwo_One: undefined;
+  TabTwo_Two: undefined;
+  TabTwo_Three: undefined;
+};
+
+export type TabThreeParamList = {
+  TabThree_One: undefined;
+  TabThree_Two: undefined;
+  TabThree_Three: undefined;
+};
+
+export type TabFourParamList = {
+  TabFour_One: undefined;
+  TabFour_Two: undefined;
+  TabFour_Three: undefined;
+};
+
+export type TabFiveParamList = {
+  TabFive_One: undefined;
+  TabFive_Two: undefined;
+  TabFive_Three: undefined;
+};
+
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;

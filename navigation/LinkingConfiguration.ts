@@ -15,29 +15,39 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          TabFriend: {
+          TabOne: {
             screens: {
-              TabFriendScreen: 'friend',
+              TabOne_One: 'One',
+              TabOne_Two: 'Two',
+              TabOne_Three: 'Three',
             },
           },
-          TabChat: {
+          TabTwo: {
             screens: {
-              TabChatScreen: 'chat',
+              TabTwo_One: 'One',
+              TabTwo_Two: 'Two',
+              TabTwo_Three: 'Three',
             },
           },
-          TabCommunity: {
+          TabThree: {
             screens: {
-              TabCommunityScreen: 'community',
+              TabThree_One: 'One',
+              TabThree_Two: 'Two',
+              TabThree_Three: 'Three',
             },
           },
-          TabRegion: {
+          TabFour: {
             screens: {
-              TabRegionScreen: 'region',
+              TabFour_One: 'One',
+              TabFour_Two: 'Two',
+              TabFour_Three: 'Three',
             },
           },
-          TabUser: {
+          TabFive: {
             screens: {
-              TabUserScreen: 'user',
+              TabFive_One: 'One',
+              TabFive_Two: 'Two',
+              TabFive_Three: 'Three',
             },
           },
         },

@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import EditScreenInfo from '../../components/EditScreenInfo';
+import { Text, View } from '../../components/Themed';
 
-export default function TabRegionScreen() {
+export default function TabFive_Three() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Region</Text>
+      <Text style={styles.title}>Tab Community</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabRegionScreen.tsx" />
+      <EditScreenInfo path="/screens/TabCommunityScreen.tsx" />
     </View>
   );
 }
