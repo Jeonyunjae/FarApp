@@ -20,7 +20,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import { BottomTabNavigator } from "./BottomTabNavigator";
 
-export default function Navigation({
+export default function LoggedInNav({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;

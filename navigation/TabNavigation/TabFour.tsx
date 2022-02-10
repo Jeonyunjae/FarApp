@@ -11,9 +11,21 @@ const Stack = createNativeStackNavigator<TabFourParamList>();
 export default function TabFour({ navigation }: RootTabScreenProps<'TabFour'>) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabFour_One" component={TabFour_One} />
-      <Stack.Screen name="TabFour_Two" component={TabFour_Two} />
-      <Stack.Screen name="TabFour_Three" component={TabFour_Three} />
+      <Stack.Screen
+        name="TabFour_One"
+        component={TabFour_One}
+        options={{ title: "Overview" }}
+      />
+      <Stack.Screen
+        name="TabFour_Two"
+        component={TabFour_Two}
+        options={{ title: "Overview" }}
+      />
+      <Stack.Screen
+        name="TabFour_Three"
+        component={TabFour_Three}
+        options={{ title: "Overview" }}
+      />
     </Stack.Navigator>
   );
 }

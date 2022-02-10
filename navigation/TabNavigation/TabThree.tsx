@@ -11,9 +11,21 @@ const Stack = createNativeStackNavigator<TabThreeParamList>();
 export default function TabThree({ navigation }: RootTabScreenProps<'TabThree'>) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabThree_One" component={TabThree_One} />
-      <Stack.Screen name="TabThree_Two" component={TabThree_Two} />
-      <Stack.Screen name="TabThree_Three" component={TabThree_Three} />
+      <Stack.Screen
+        name="TabThree_One"
+        component={TabThree_One}
+        options={{ title: "Overview" }}
+      />
+      <Stack.Screen
+        name="TabThree_Two"
+        component={TabThree_Two}
+        options={{ title: "Overview" }}
+      />
+      <Stack.Screen
+        name="TabThree_Three"
+        component={TabThree_Three}
+        options={{ title: "Overview" }}
+      />
     </Stack.Navigator>
   );
 }
