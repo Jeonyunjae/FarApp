@@ -14,7 +14,11 @@ import LinkingConfiguration from "./LinkingConfiguration";
 
 const Stack = createNativeStackNavigator();
 
-export default function LoggedOutNav() {
+export default function LoggedOutNav({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) {
   return (
     <NavigationContainer>
       <RootNavigator />

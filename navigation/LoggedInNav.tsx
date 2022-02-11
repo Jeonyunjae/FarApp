@@ -12,13 +12,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 
-import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
+import ModalScreen from "../screens/components/ModalScreen";
+import NotFoundScreen from "../screens/components/NotFoundScreen";
 import {
   RootStackParamList,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { BottomTabNavigator } from "./BottomTabNavigator";
+import { BottomTabNavigator } from "./TabNavigation/TabNavigator";
 
 export default function LoggedInNav({
   colorScheme,

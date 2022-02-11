@@ -17,7 +17,11 @@ export default function App() {
     return (
       <ApolloProvider client={client}>
         <SafeAreaProvider>
-          {false ? <LoggedInNav colorScheme={colorScheme} /> : <LoggedOutNav />}
+          {false ? (
+            <LoggedInNav colorScheme={colorScheme} />
+          ) : (
+            <LoggedOutNav colorScheme={colorScheme} />
+          )}
           <StatusBar />
         </SafeAreaProvider>
       </ApolloProvider>
