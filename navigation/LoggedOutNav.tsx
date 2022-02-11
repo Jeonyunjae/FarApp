@@ -4,7 +4,6 @@ import {
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
-import React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "../screens/Login/Welcome";

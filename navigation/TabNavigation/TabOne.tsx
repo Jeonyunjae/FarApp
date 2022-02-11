@@ -13,17 +13,17 @@ export default function TabOne({ navigation }: RootTabScreenProps<'TabOne'>) {
       <Stack.Screen
         name="TabOne_One"
         component={TabOne_One}
-        options={{ title: "Overview" }}
+        options={{ title: "Overview", headerShown: false }}
       />
       <Stack.Screen
         name="TabOne_Two"
         component={TabOne_Two}
-        options={{ title: "Overview" }}
+        options={{ title: "Overview", headerShown: false }}
       />
       <Stack.Screen
         name="TabOne_Three"
         component={TabOne_Three}
-        options={{ title: "Overview" }}
+        options={{ title: "Overview", headerShown: false }}
       />
     </Stack.Navigator>
   );

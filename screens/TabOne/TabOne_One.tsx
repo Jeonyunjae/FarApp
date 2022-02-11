@@ -1,31 +1,46 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import { Ionicons } from "@expo/vector-icons";
+import {
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { Header as HeaderRNE, HeaderProps, Icon } from "react-native-elements";
+import { useState } from "react";
+import ModalLocation from "../TabOne/ModalLocation";
+import { Text, View } from "../../components/Themed";
 
 export default function TabOne_One() {
+  const [modalVisible, setModalVisible] = useState(false);
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Community</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabCommunityScreen.tsx" />
+    <View>
+      <HeaderRNE
+        rightComponent={
+          <View style={styles.headerRight}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <Ionicons name="menu" color="white" />
+            </TouchableOpacity>
+          </View>
+        }
+        centerComponent={{ text: "Market", style: styles.heading }}
+      />
+      <ModalLocation
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      >
+        
+      </ModalLocation>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+const styles = StyleSheet.create({  
+  headerRight: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 5,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  heading: {
+    color: "white",
+    fontSize: 22,
   },
 });
