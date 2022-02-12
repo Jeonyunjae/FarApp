@@ -12,8 +12,10 @@ import { createUploadLink } from "apollo-upload-client";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
+export const locationVar = makeVar("");
 
 const TOKEN = "token";
+const LOCATION = "location";
 
 export const logUserIn = async (token: any) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -25,6 +27,13 @@ export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar("");
+};
+
+export const locationSet = async (location: any) => {
+  await AsyncStorage.setItem(LOCATION, ""+location);
+  locationVar(""+location);
+  console.log("locationSet");
+  console.log(""+locationVar());
 };
 
 const uploadhttpLink = createUploadLink({

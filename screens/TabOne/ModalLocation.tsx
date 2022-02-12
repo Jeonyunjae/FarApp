@@ -1,37 +1,75 @@
 import { NativeStackScreenProps } from "react-native-screens/native-stack";
 import EditScreenInfo from "../../components/EditScreenInfo";
-import { Alert, Modal, StyleSheet, Text, Pressable, Dimensions, Platform, View, Button } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  Dimensions,
+  Platform,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { useState, useEffect } from "react";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import styled from "styled-components/native";
-import Constants from 'expo-constants';
-import MapView, { Callout, Marker } from 'react-native-maps';
-export default function ModalLocation( props : any) {
-  const [location, setLocation] = useState<any>(null);
+import Constants from "expo-constants";
+import MapView, { Callout, Marker, Region } from "react-native-maps";
+import { locationSet } from "../../apollo";
+
+
+export default function ModalLocation(props: any) {
+  const [location, setLocation] = useState<Region>({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.045,
+    longitudeDelta: 0.045,
+  });
+
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
+      if (Platform.OS === "android" && !Constants.isDevice) {
         setErrorMsg(
-          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Snack in an Android emulator. Try it on your device!"
         );
         return;
       }
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-
-      console.log(location)
+      let curLocation = await Location.getCurrentPositionAsync({});
+      //setLocation({
+      //  latitude: location.coords.latitude || 0,
+      //  longitude: location.coords.longitude || 0,
+      //  latitudeDelta: 0.045,
+      //  longitudeDelta: 0.045,
+      //});
     })();
   }, []);
+  
+  const onRegionChange = (props: any) => {
+    if (
+      location.latitude !== props.latitude ||
+      location.longitude !== props.longitude
+    ) {
+      setLocation({
+        latitude: props.latitude,
+        longitude: props.longitude,
+        latitudeDelta: props.latitudeDelta,
+        longitudeDelta: props.longitudeDelta,
 
-  let text = 'Waiting..';
+      });
+    }
+  };
+
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -52,45 +90,51 @@ export default function ModalLocation( props : any) {
           <MapView
             style={mapStyles.map}
             initialRegion={{
-              latitude: location?.coords?.latitude || 0,
-              longitude: location?.coords?.longitude || 0,
+              latitude: location?.latitude || 0,
+              longitude: location?.longitude || 0,
               latitudeDelta: 0.045,
               longitudeDelta: 0.045,
             }}
-            region={{
-              latitude: location?.coords?.latitude || 0,
-              longitude: location?.coords?.longitude || 0,
-              latitudeDelta: 0.045,
-              longitudeDelta: 0.045,
-            }}
+            region={location}
+            onRegionChange={onRegionChange}
             camera={{
               center: {
-                latitude: location?.coords?.latitude || 0,
-                longitude: location?.coords?.longitude || 0,
+                latitude: location?.latitude || 0,
+                longitude: location?.longitude || 0,
               },
               heading: 1,
               pitch: 1,
               zoom: 1,
               altitude: 1,
             }}
-            showsCompass={true}
-            rotateEnabled={false}
+            showsCompass={false}
+            rotateEnabled={true}
             showsTraffic={true}
             showsMyLocationButton={true}
-            //애플지도에 비해 느림거 같음
+
             //provider="google"
           >
             <Marker
               coordinate={{
-                latitude: location?.coords?.latitude || 0,
-                longitude: location?.coords?.longitude || 0,
+                latitude: location?.latitude || 0,
+                longitude: location?.longitude || 0,
               }}
               pinColor="blue"
             >
               <Callout>
-                <Text>here</Text>
+                <TouchableOpacity
+                  onPress={() => locationSet(location)}>
+                <Text>나!!!</Text>
+                </TouchableOpacity>
               </Callout>
             </Marker>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => props.setModalVisible(!props.modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
           </MapView>
         </View>
       </View>
@@ -100,14 +144,15 @@ export default function ModalLocation( props : any) {
 const mapStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
   },
   map: {
-    width: Dimensions.get('window').width*0.90,
-    height: Dimensions.get('window').height*0.80,
+    width: Dimensions.get("window").width * 0.9,
+    height: Dimensions.get("window").height * 0.8,
     borderRadius: 20,
   },
+  BtnClose: { flex: 1, justifyContent: "center", alignItems: "center" },
 });
 
 const modalStyles = StyleSheet.create({
@@ -181,4 +226,47 @@ const modalStyles = StyleSheet.create({
   buttonClose: {
     backgroundColor: "#2196F3",
   },
+});
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
