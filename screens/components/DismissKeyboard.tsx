@@ -1,4 +1,3 @@
-import React from "react";
 import { Keyboard, Platform } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
