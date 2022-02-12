@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import useColorScheme from "../../hooks/useColorScheme";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,17 +8,24 @@ import { Header as HeaderRNE, HeaderProps, Icon } from "react-native-elements";
 import { useState } from "react";
 import ModalLocation from "../TabOne/ModalLocation";
 import { Text, View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
 
 export default function TabOne_One() {
   const [modalVisible, setModalVisible] = useState(false);
+  const colorScheme = useColorScheme();
   
   return (
     <View>
       <HeaderRNE
+        backgroundColor="white"
         rightComponent={
           <View style={styles.headerRight}>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Ionicons name="menu" color="white" />
+            <Ionicons
+                name="map-outline"
+                size={25}
+                backgroundColor=""
+              />
             </TouchableOpacity>
           </View>
         }
@@ -37,10 +45,10 @@ const styles = StyleSheet.create({
   headerRight: {
     display: "flex",
     flexDirection: "row",
-    marginTop: 5,
+    marginRight: 5,
   },
   heading: {
-    color: "white",
+    color: "black",
     fontSize: 22,
-  },
+  }
 });

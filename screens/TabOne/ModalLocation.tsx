@@ -45,11 +45,14 @@ export default function ModalLocation(props: any) {
       }
 
       let curLocation = await Location.getCurrentPositionAsync({});
-      //setLocation({
-      //  latitude: location.coords.latitude || 0,
-      //  longitude: location.coords.longitude || 0,
-      //  latitudeDelta: 0.045,
-      //  longitudeDelta: 0.045,
+      setLocation({
+        latitude: curLocation.coords.latitude,
+        longitude: curLocation.coords.longitude,
+        latitudeDelta: 0.045,
+        longitudeDelta: 0.045,
+      });
+
+      console.log(location);
       //});
     })();
   }, []);
@@ -258,7 +261,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "green",
   },
   textStyle: {
     color: "white",
