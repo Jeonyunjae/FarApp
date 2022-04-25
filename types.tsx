@@ -25,7 +25,7 @@ export type RootStackParamList = {
 
 export type LoginStackParamList = {
   Welcome: undefined;
-  Login: { username: string; password: string } | undefined;
+  Login: { userCode: string; password: string } | undefined;
   CreateAccount: undefined;
 };
 

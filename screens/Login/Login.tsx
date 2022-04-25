@@ -1,17 +1,17 @@
 import { NativeStackScreenProps } from "react-native-screens/native-stack";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { LoginStackParamList } from "../../types";
 import AuthLayout from "../components/auth/AuthLayout";
 import { InputText } from "../components/auth/AuthShared";
 import AuthButton from "../components/auth/AuthButton";
 import { useForm } from "react-hook-form";
-import { isLoggedInVar } from "../../apollo";
+import { isLoggedInVar, logUserIn } from "../../apollo";
 import { gql, useMutation } from "@apollo/client";
 
 const LOGIN_MUTATION = gql`
-  mutation login($userName: String!, $password: String!) {
-    login(userName: $userName, password: $password) {
+  mutation login($userCode: String!, $password: String!) {
+    login(userCode: $userCode, password: $password) {
       ok
       token
       error
@@ -21,15 +21,21 @@ const LOGIN_MUTATION = gql`
 
 type LoginStackNavigationProp = NativeStackScreenProps<LoginStackParamList, 'Login'>
 
-export default function LogIn({ navigation }: LoginStackNavigationProp) {
-  const { register, handleSubmit, setValue, watch } = useForm();
+export default function Login({ navigation, route: { params } }: LoginStackNavigationProp) {
+  let loadCheck = false;
+  const { register, handleSubmit, setValue, watch } = useForm({
+    defaultValues: {
+      password: params?.password,
+      userCode: params?.userCode,
+    },
+  });
   const passwordRef = useRef();
-  const onCompleted = (data:any) => {
+  const onCompleted = async(data:any) => {
     const {
       login: { ok, token },
     } = data;
     if (ok) {
-      isLoggedInVar(true);
+      await logUserIn(token);
     }
   };
   const [logInMutation, { loading, error }] = useMutation(LOGIN_MUTATION, {
@@ -40,8 +46,8 @@ export default function LogIn({ navigation }: LoginStackNavigationProp) {
     nextOne?.current?.focus();
   };
   const onValid = (data:any) => {
-    console.log(data);
-    if (!loading) {
+    if (!loadCheck) {
+      loadCheck = true;
       logInMutation({
         variables: {
           ...data,
@@ -50,7 +56,7 @@ export default function LogIn({ navigation }: LoginStackNavigationProp) {
     }
   };
   useEffect(() => {
-    register("userName", {
+    register("userCode", {
       required: true,
     });
     register("password", {
@@ -61,24 +67,25 @@ export default function LogIn({ navigation }: LoginStackNavigationProp) {
   return (
     <AuthLayout>
       <InputText
-        placeholder="Username"
+        placeholder="UserCode"
         returnKeyType="next"
         placeholderTextColor="gray"
-        style={{ backgroundColor: "white", width: "100%" }}
+        value={watch("userCode")}
         onSubmitEditing={() => onNext(passwordRef)}
-        onChangeText={(text:any) => setValue("userName", text)}
+        onChangeText={(text:any) => setValue("userCode", text)}
       />
       <InputText
         placeholder="Password"
         secureTextEntry
+        placeholderTextColor="gray"
         returnKeyType="done"
-        style={{ backgroundColor: "white", width: "100%" }}
+        value={watch("password")}
         onChangeText={(text:any) => setValue("password", text)}
       />
       <AuthButton
         text="Log In"
-        loading={loading}
-        disabled={!watch("userName") || !watch("password")}
+        loading={loadCheck}
+        disabled={!watch("userCode") || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
     </AuthLayout>

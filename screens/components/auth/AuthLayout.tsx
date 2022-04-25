@@ -1,4 +1,3 @@
-import React from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
 import DismissKeyboard from "../DismissKeyboard";

@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "react-native-screens/native-stack";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -11,20 +11,19 @@ import { TextInput } from "react-native";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
-    $firstName: String!
-    $lastName: String
-    $username: String!
-    $email: String!
+    $userCode: String!
     $password: String!
+    $phoneNumber: String!
+    $email: String!
   ) {
     createAccount(
-      firstName: $firstName
-      lastName: $lastName
-      username: $username
-      email: $email
+      userCode: $userCode
       password: $password
+      phoneNumber: $phoneNumber
+      email: $email
     ) {
       ok
+      id
       error
     }
   }
@@ -38,10 +37,10 @@ export default function CreateAccount({ navigation } : CreateAccountStackNavigat
     const {
       createAccount: { ok },
     } = data;
-    const { username, password } = getValues();
+    const { userCode, password } = getValues();
     if (ok) {
       navigation.navigate("Login", {
-        username,
+        userCode,
         password,
       });
     }
@@ -52,10 +51,10 @@ export default function CreateAccount({ navigation } : CreateAccountStackNavigat
       onCompleted,
     }
   );
-  const lastNameRef = useRef<TextInput>(null);
-  const usernameRef = useRef<TextInput>(null);
-  const emailRef = useRef<TextInput>(null);
+  const userCodeRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
+  const phoneNumberRef = useRef<TextInput>(null);
+  const emailRef = useRef<TextInput>(null);
 
   const onNext = (nextOne:any) => {
     nextOne?.current?.focus();
@@ -72,47 +71,39 @@ export default function CreateAccount({ navigation } : CreateAccountStackNavigat
   };
 
   useEffect(() => {
-    register("firstName", {
+    register("userCode", {
       required: true,
     });
-    register("lastName", {
-      required: true,
-    });
-    register("username", {
+    register("password", {
       required: true,
     });
     register("email", {
       required: true,
     });
-    register("password", {
+    register("phoneNumber", {
       required: true,
     });
   }, [register]);
   return (
     <AuthLayout>
       <InputText
-        placeholder="First Name"
-        returnKeyType="next"
-        onSubmitEditing={() => onNext(lastNameRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-        onChangeText={(text) => setValue("firstName", text)}
-      />
-      <InputText
-        ref={lastNameRef}
-        placeholder="Last Name"
-        returnKeyType="next"
-        onSubmitEditing={() => onNext(usernameRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-        onChangeText={(text) => setValue("lastName", text)}
-      />
-      <InputText
-        ref={usernameRef}
-        placeholder="Username"
+        ref={userCodeRef}
+        placeholder="ID"
         autoCapitalize="none"
+        returnKeyType="next"
+        onSubmitEditing={() => onNext(passwordRef)}
+        placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
+        onChangeText={(text) => setValue("userCode", text)}
+      />
+      <InputText
+        ref={passwordRef}
+        placeholder="Password"
+        autoCapitalize="none"
+        secureTextEntry
         returnKeyType="next"
         onSubmitEditing={() => onNext(emailRef)}
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-        onChangeText={(text) => setValue("username", text)}
+        onChangeText={(text) => setValue("password", text)}
       />
       <InputText
         ref={emailRef}
@@ -120,17 +111,16 @@ export default function CreateAccount({ navigation } : CreateAccountStackNavigat
         autoCapitalize="none"
         keyboardType="email-address"
         returnKeyType="next"
-        onSubmitEditing={() => onNext(passwordRef)}
+        onSubmitEditing={() => onNext(phoneNumberRef)}
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
         onChangeText={(text) => setValue("email", text)}
       />
       <InputText
-        ref={passwordRef}
-        placeholder="Password"
-        secureTextEntry
+        ref={phoneNumberRef}
+        placeholder="Phone Number"
         returnKeyType="done"
         placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-        onChangeText={(text) => setValue("password", text)}
+        onChangeText={(text) => setValue("phoneNumber", text)}
         onSubmitEditing={handleSubmit(onValid)}
       />
       <AuthButton

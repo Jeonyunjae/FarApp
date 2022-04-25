@@ -1,5 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { logUserOut } from '../apollo';
 
 import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
@@ -9,6 +10,13 @@ export default function EditScreenInfo({ path }: { path: string }) {
   return (
     <View>
       <View style={styles.getStartedContainer}>
+      <Text
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          onPress={logUserOut}
+          darkColor="rgba(255,255,255,0.8)">
+          Logout
+        </Text>
         <Text
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
