@@ -14,7 +14,6 @@ const LOGIN_MUTATION = gql`
     login(userCode: $userCode, password: $password) {
       ok
       token
-      error
     }
   }
 `;

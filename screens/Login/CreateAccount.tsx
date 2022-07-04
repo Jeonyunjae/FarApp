@@ -24,7 +24,6 @@ const CREATE_ACCOUNT_MUTATION = gql`
     ) {
       ok
       id
-      error
     }
   }
 `;
