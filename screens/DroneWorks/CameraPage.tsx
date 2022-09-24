@@ -15,7 +15,6 @@ import * as MediaLibrary from "expo-media-library";
 import { useIsFocused } from "@react-navigation/core";
 import React, { useEffect, useRef, useState } from "react";
 import { Gyroscope } from "expo-sensors";
-import SearchModal from "./component/SearchModal";
 import { gql } from "@apollo/client";
 import { FEED_PHOTO } from "../../fragments";
 
@@ -104,7 +103,6 @@ export default function CameraPage({ navigation }: any) {
             <CloseButton onPress={setTakenPhotoRemove}>
               <Ionicons name="close" color="white" size={30} />
             </CloseButton>
-            <SearchModal/>
           </View>
         )}
       </Camera>
