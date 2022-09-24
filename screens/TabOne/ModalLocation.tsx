@@ -17,7 +17,6 @@ import * as Location from "expo-location";
 import styled from "styled-components/native";
 import Constants from "expo-constants";
 import MapView, { Callout, Marker, Region } from "react-native-maps";
-import { locationSet } from "../../apollo";
 
 
 export default function ModalLocation(props: any) {
@@ -125,8 +124,7 @@ export default function ModalLocation(props: any) {
               pinColor="blue"
             >
               <Callout>
-                <TouchableOpacity
-                  onPress={() => locationSet(location)}>
+                <TouchableOpacity>
                 <Text>나!!!</Text>
                 </TouchableOpacity>
               </Callout>

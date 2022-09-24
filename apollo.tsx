@@ -30,18 +30,13 @@ export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar("");
+
 };
 
-export const locationSet = async (location: any) => {
-  await AsyncStorage.setItem(LOCATION, ""+location);
-  locationVar(""+location);
-  console.log("locationSet");
-  console.log(""+locationVar());
-};
 
 const uploadhttpLink = createUploadLink({
   uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
+  //cache: new InMemoryCache(),
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -72,8 +67,8 @@ export const cache = new InMemoryCache({
   },
 });
 
-const client = new ApolloClient({
+const apolloClient = new ApolloClient({
   link: authLink.concat(onErrorLink).concat(uploadhttpLink),
   cache,
 });
-export default client;
+export default apolloClient;
