@@ -1,18 +1,12 @@
-
 import {
   NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
 } from "@react-navigation/native";
 import { ColorSchemeName, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Welcome from "../screens/Login/Welcome";
-import Login from "../screens/Login/Login";
-import CreateAccount from "../screens/Login/CreateAccount";
-import CameraPage from "../screens/DroneWorks/CameraPage";
-import SearchPage from "../screens/DroneWorks/SearchPage";
 import WebViewPage from "../screens/DroneWorks/WebViewPage";
 import MapPage from "../screens/DroneWorks/MapPage";
+import LocationSearchPage from "../screens/DroneWorks/LocationSearchPage";
+import StoreSearchPage from "../screens/DroneWorks/StoreSearchPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +29,6 @@ function RootNavigator() {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTransparent: true,
-        
       }}
     >
       <Stack.Screen
@@ -43,11 +36,29 @@ function RootNavigator() {
         options={{
           headerShown: false,
         }}
-        
         component={MapPage}
       />
-      <Stack.Screen name="Search" component={SearchPage} />
-      <Stack.Screen name="WebView" component={WebViewPage} />
+      <Stack.Screen
+        name="LocationSearch"
+        options={{
+          headerShown: false,
+        }}
+        component={LocationSearchPage}
+      />
+      <Stack.Screen
+        name="StoreSearch"
+        options={{
+          headerShown: false,
+        }}
+        component={StoreSearchPage}
+      />
+      <Stack.Screen
+        name="WebView"
+        options={{
+          headerShown: false,
+        }}
+        component={WebViewPage}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,35 +1,22 @@
+import Constants from 'expo-constants';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import { logUserOut } from '../../apollo';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import { WebView } from 'react-native-webview';
 
-export default function WebWiewPage() {
+
+export default function WebWiewPage({route}:any) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Five</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-    </View>
+    <WebView 
+      style={styles.container}
+      source={{ uri: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query='+route.params }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    marginTop: Constants.statusBarHeight,
   },
 });
