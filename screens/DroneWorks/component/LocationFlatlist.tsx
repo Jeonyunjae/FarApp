@@ -8,31 +8,32 @@ import {
 } from "react-native";
 import { Image } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
+import textLengthOverCut from "../../../util/util";
 
 export default function LocationFlatlist({ navigation, route, data }: any) {
   const [selectedId, setSelectedId] = useState(null);
   const Item = ({ item }: any) => (
     <TouchableOpacity onPress={() => {
-      navigation.navigate("WebView", item.Usercode)
+      navigation.navigate("WebView", item)
     }}>
       <View style={styles.item_main}>
         <View style={styles.item_group}>
           <View style={styles.item_avator}>
             <Image
               style={styles.item_avator}
-              source={require("../../../assets/images/logo.png")}
+              source={require("../../../assets/images/click.png")}
             />
           </View>
           <View style={styles.item_info}>
-            <Text style={styles.title}>{item.Usercode}</Text>
+            <Text style={styles.title}>{textLengthOverCut(item.Name, 10,'...')}</Text>
             <Text style={styles.item}>
-              Latitude : {item.Loclatitude.toFixed(6)}
+               {textLengthOverCut(item.Address, 15,'...')}
             </Text>
             <Text style={styles.item}>
-              Longitude : {item.Loclongtitude.toFixed(8)}
+              {item.Loclatitude.toFixed(6)}/{item.Loclongtitude.toFixed(8)}
             </Text>
             <Text style={styles.item}>
-              Distance : {item.Distance.toFixed()}m
+              거리 : {item.Distance.toFixed()}m
             </Text>
           </View>
         </View>
@@ -48,6 +49,7 @@ export default function LocationFlatlist({ navigation, route, data }: any) {
       style={styles.flatlist}
       data={data}
       renderItem={renderItem}
+      keyExtractor={(item) => item.Usercode}
       extraData={selectedId}
     />
   );
@@ -70,7 +72,6 @@ const styles = StyleSheet.create({
   item_avator: {
     width: 100,
     height: 100,
-    backgroundColor: "#fff",
     borderRadius: 30,
   },
   item_main: {

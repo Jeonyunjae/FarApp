@@ -56,7 +56,7 @@ export default function LocationSearchPage({ navigation, route }: any) {
         <View style={s.location_main}>
           <View style={s.location_inn}>
             <View style={s.content}>
-              <Text style={s.content__subheading}>{"Latitude"}</Text>
+              <Text style={s.content__subheading}>{"위도"}</Text>
               <Text style={s.content__heading}>{route.params.latitude.toFixed(8)}</Text>
             </View>
           </View>
@@ -64,7 +64,7 @@ export default function LocationSearchPage({ navigation, route }: any) {
         <View style={s.location_main}>
           <View style={s.location_inn}>
             <View style={s.content}>
-              <Text style={s.content__subheading}>{"Longitude"}</Text>
+              <Text style={s.content__subheading}>{"경도"}</Text>
               <Text style={s.content__heading}>{route.params.longitude.toFixed(9)}</Text>
             </View>
           </View>
@@ -100,16 +100,17 @@ const s = StyleSheet.create({
     paddingTop: 10,
   },
   location_total: {
-    top: 90,
+    top: 50,
     flexDirection: "column", // 혹은 'column'
   },
   location_group: {
     flexDirection: "row", // 혹은 'column'
   },
   location_list: {
+    top:10,
     borderRadius: 15,
     backgroundColor: "#30CE88",
-    height: Dimensions.get("window").height * 0.67,
+    height: Dimensions.get("window").height * 0.70,
     width: Dimensions.get("window").width * 0.92,
     left: Dimensions.get("window").width * 0.04,
   },
